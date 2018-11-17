@@ -2,7 +2,7 @@
 <%  //로그인 체크
     if(session.getAttribute("memId")==null){
 %>
-<!-- <jsp:forward page="/login/loginPage.jsp" /> -->
+	<jsp:forward page="/login/loginPage.jsp" /> 
 ㅈ<%
     }
 %>
