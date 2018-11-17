@@ -32,7 +32,7 @@
         <%=filepath %> %>
             <img src="${pageContext.request.contextPath}/<%=filepath %>" class="uploading-image">
         </p>
-        <form action="${pageContext.request.contextPath}/postEdit/postingUploadPro.jsp" method="post">
+        <form action="postingUploadPro.jsp" method="post">
             <p>
                 <textarea placeholder="하고싶은 말을 입력해주세요" class="uploading-story" name="content"></textarea>
                 <input type="hidden" value="<%= filepath%>" name="image">

@@ -84,7 +84,7 @@ public class MemberDAO {
                 profile = new MemberDTO();
                 profile.setId(rs.getInt("id"));
                 profile.setNick(rs.getString("username"));
-                profile.setPassword(rs.getString("password"));
+                profile.setPassword(rs.getString("pass"));
                 profile.setProfile_img(rs.getString("profile_img"));
                 profile.setProfile_comment(rs.getString("profile_comment"));
             }else{

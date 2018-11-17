@@ -227,7 +227,7 @@ public class PostDAO {
             DBClose.close(con,pstmt);
         }
         return list;
-    }
+    } 
 
     //글 입력하기
     //위에 있던 메소드와는 다르게 DB에 입력하는 메소드, DTO인스턴스가 아닌 단순 데이터를 인자로 받아와 글을 작성한다.

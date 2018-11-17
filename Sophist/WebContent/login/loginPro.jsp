@@ -17,9 +17,9 @@
         //인증성공하면 유저의 이메일을 memId라는 이름의 세션으로 지정한다. 앞으로 이 세션으로 로그인 인증을 하게 됨
         session.setAttribute("memId", memberDao.getUser_id(email));
 %>
+	<!-- 로그인 성공, 인덱스 이 -->
         <script>
-            // 인증에 성공하면 인덱스 페이지로 이동
-           
+        	location.href = "${pageContext.request.contextPath}/index.jsp";           
         </script>
         로그인 성공, 이동할 페이지 입력 
 <%
