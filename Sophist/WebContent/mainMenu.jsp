@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <div class="main-menu-bar">
           <span>
               <a href="${pageContext.request.contextPath}/index.jsp">
-                  <img src="${pageContext.request.contextPath}/assets/icons/logo.png" class="logo-image">
+                  <img src="${pageContext.request.contextPath}/assets/icons/sophist.png" class="logo-image">
               </a>
           </span>
     <span>

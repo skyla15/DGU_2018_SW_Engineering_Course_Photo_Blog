@@ -11,7 +11,7 @@
 <%  //세션여부 확인하여 로그인여부 체크
   if(session.getAttribute("memId") ==null){
 %>
-	<jsp:forward page="/Sophist/login/loginPage.jsp" />
+	<jsp:forward page="/login/loginPage.jsp" />
 <%
   }
 %>

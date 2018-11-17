@@ -26,7 +26,7 @@
             <p>
                 아직 회원이 아니신가요?
             </p>
-            <a href="../Registration/registerPage.jsp">회원가입</a>
+            <a href="/Sophist/Registration/registerPage.jsp">회원가입</a>
         </div>
     </div>
 </div>
