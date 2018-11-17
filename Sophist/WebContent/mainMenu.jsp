@@ -17,7 +17,7 @@
         <a href="/Sophist/profile/profilePage.jsp?user_id=<%=session.getAttribute("memId")%>">
             <img src="${pageContext.request.contextPath}/assets/icons/profile.png">
         </a>
-        <a href="${pageContext.request.contextPath}/postEdit/imageSelectPage.jsp">
+        <a href="${pageContext.request.contextPath}/PostEdit/imageSelectPage.jsp">
             <img src="${pageContext.request.contextPath}/assets/icons/upload.png">
         </a>
     </span>

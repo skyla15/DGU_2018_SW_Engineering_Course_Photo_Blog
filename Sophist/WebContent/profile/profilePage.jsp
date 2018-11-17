@@ -68,7 +68,7 @@
                         <div class="dropdown">
                             <button onclick="dropDown()" class="dropbtn profile-button">&nabla;</button>
                             <div id="myDropdown" class="dropdown-content">
-                                <a href="${pageContext.request.contextPath}/logout.jsp">로그아웃</a>
+                                <a href="/logout.jsp">로그아웃</a>
                             </div>
                         </div>
 <%
