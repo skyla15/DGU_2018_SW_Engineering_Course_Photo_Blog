@@ -9,7 +9,7 @@
     //로그인 체크
     if(session.getAttribute("memId")==null){
 %>
-<jsp:forward page="${pageContext.request.contextPath}/login/loginPage.jsp" />
+	<jsp:forward page="/login/loginPage.jsp" /> 
 <%
     }else if(request.getParameter("user_id")==null || request.getParameter("user_id")==""){
 %>
@@ -43,7 +43,7 @@
 <head>
     <title>Profile</title>
     <link href="/Sophist/assets/css/css_main.css" rel="stylesheet" type="text/css">
-    <script src="/Sophist/assets/assets/js/main_js.js" type=text/javascript></script>
+    <script src="/Sophist/assets/js/main_js.js" type=text/javascript></script>
     <meta charset="utf-8">
 </head>
 <body>
@@ -65,18 +65,16 @@
 %>
                         <button class="profile-button"
                                 onclick="location.href='${pageContext.request.contextPath}/profile/profileEditPage.jsp?user_id=<%=memId %>'">프로필 편집</button>&nbsp;&nbsp;&nbsp;
-                                
-                        <button class="profile-button"
-                                onclick="location.href='${pageContext.request.contextPath}/logout.jsp'">로그아웃</button>&nbsp;&nbsp
+                           
 
-                    <!-- 
+                   
                         <div class="dropdown">
                             <button onclick="dropDown()" class="dropbtn profile-button">&nabla;</button>
                             <div id="myDropdown" class="dropdown-content">
-                                <a href="/logout.jsp">로그아웃</a>
+                                <a href="${pageContext.request.contextPath}/logout.jsp">로그아웃</a>
                             </div>
                         </div>
-                    -->
+                    
 <%
         }else if (isFollowing == true){ //팔로우중인 사람일때 해당 버튼이 표시됨
 %>

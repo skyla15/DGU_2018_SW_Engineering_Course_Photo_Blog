@@ -20,7 +20,8 @@
         </a>
         <a href="${pageContext.request.contextPath}/PostEdit/imageSelectPage.jsp">
             <img src="${pageContext.request.contextPath}/assets/icons/upload.png">
-        </a>
+        </a>        
+        
     </span>
 </div>
 
@@ -28,6 +29,6 @@
     function addSharp(){
         var hashContent = document.getElementById("hash").value;
         document.search.hash.value= "#" + hashContent;
-        document.getEl"/Users/mac/Desktop/logout_icon.jpg"ementByName("search").submit();
+        document.getElementByName("search").submit();
     }
 </script>
