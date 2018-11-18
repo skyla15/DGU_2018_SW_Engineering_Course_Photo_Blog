@@ -48,6 +48,7 @@
             String content = post.getContent();
             int postId = post.getId();
     %>
+    <%=postId %>
     <div class="post-box">
         <p class="post-top">
             <img src="${pageContext.request.contextPath}<%=memDao.getProfileImg(userId) %>" class="post-profile-img">
@@ -58,7 +59,7 @@
               </span>
         </p>
         <p>
-            <img src="${pageContext.request.contextPath}<%= postImg%>" class="post-img">
+            <img src="${pageContext.request.contextPath}<%=postImg%>" class="post-img">
         </p>
         <div class="post-content">
             <p class="post-like">

@@ -64,13 +64,19 @@
         if(isMyself == true){   //본인일 경우에만 해당 버튼이 표시됨
 %>
                         <button class="profile-button"
-                                onclick="location.href='${pageContext.request.contextPath}/profile/profileEditPage.jsp?user_id=<%=memId %>'">프로필 편집</button>&nbsp;
+                                onclick="location.href='${pageContext.request.contextPath}/profile/profileEditPage.jsp?user_id=<%=memId %>'">프로필 편집</button>&nbsp;&nbsp;&nbsp;
+                                
+                        <button class="profile-button"
+                                onclick="location.href='${pageContext.request.contextPath}/logout.jsp'">로그아웃</button>&nbsp;&nbsp
+
+                    <!-- 
                         <div class="dropdown">
                             <button onclick="dropDown()" class="dropbtn profile-button">&nabla;</button>
                             <div id="myDropdown" class="dropdown-content">
                                 <a href="/logout.jsp">로그아웃</a>
                             </div>
                         </div>
+                    -->
 <%
         }else if (isFollowing == true){ //팔로우중인 사람일때 해당 버튼이 표시됨
 %>

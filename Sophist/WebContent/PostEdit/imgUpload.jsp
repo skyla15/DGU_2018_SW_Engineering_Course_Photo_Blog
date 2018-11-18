@@ -57,5 +57,5 @@
 
 %>
 <script>
-    location.href = "${pageContext.request.contextPath}/PostEdit/postingEditPage.jsp?filepath=images/<%=realFileName%>";
+    location.href = "${pageContext.request.contextPath}/PostEdit/postingEditPage.jsp?filepath=/images/<%= realFileName%>";
 </script>

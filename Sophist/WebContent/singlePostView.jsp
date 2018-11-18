@@ -93,8 +93,10 @@
 <%
         if(myPost == true){
 %>
+    <%=postId %>
+
     <div class="delete-button-div">
-        <button class="post-delete-button" onclick="location.href='${pageContext.request.contextPath}/postEdit/deletePost.jsp?post_id=<%=postId%>'">
+        <button class="post-delete-button" onclick="location.href='${pageContext.request.contextPath}/PostEdit/deletePost.jsp?post_id=<%=postId%>'">        
             삭제
         </button>
     </div>

@@ -28,6 +28,6 @@
     function addSharp(){
         var hashContent = document.getElementById("hash").value;
         document.search.hash.value= "#" + hashContent;
-        document.getElementByName("search").submit();
+        document.getEl"/Users/mac/Desktop/logout_icon.jpg"ementByName("search").submit();
     }
 </script>
