@@ -48,7 +48,11 @@
             String content = post.getContent();
             int postId = post.getId();
     %>
+    
+<!-- 테스트용 -->
     <%=postId %>
+<!-- 테스트용 -->
+
     <div class="post-box">
         <p class="post-top">
             <img src="${pageContext.request.contextPath}<%=memDao.getProfileImg(userId) %>" class="post-profile-img">

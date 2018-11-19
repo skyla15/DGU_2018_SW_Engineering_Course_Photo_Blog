@@ -271,7 +271,7 @@ public class PostDAO {
 
         // 해시태그를 생성하기 위해 HashTagGenerator클래스를 hash라는 이름으로 생성한다
         HashTagGenerator hash = new HashTagGenerator();
-        String url = "${pageContext.request.contextPath}/hashPostView.jsp?hash=";
+        String url = "/Sophist/hashPostView.jsp?hash=";
         ResultSet rs = null;
 
         try{
