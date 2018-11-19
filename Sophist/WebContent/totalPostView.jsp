@@ -67,8 +67,17 @@
         </p>
         <div class="post-content">
             <p class="post-like">
-                좋아요 <%=cntLike %>개
+            
+<!-- 좋아요 버튼 추가, 이미지 및 로직 추가 -->
+                <button>
+                	<img>
+                </button>
+<!-- 좋아요 버튼 추가, 이미지 및 로직 추가 -->
+                좋아요 <%=cntLike %>개	                
             </p>
+            
+            
+            
             <p class="post-story">
                 <b><a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%= userId%>">
                     <%=memDao.getUsername(userId) %></a></b> <%=content.replace("\r\n","<br>") %>
