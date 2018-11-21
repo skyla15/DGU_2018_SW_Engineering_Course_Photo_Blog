@@ -25,6 +25,7 @@
         <form name="fileform" enctype="multipart/form-data" action="imgUpload.jsp" method="post">
             <p>
                 <input type="file" value="이미지 선택" name="filename"><br>
+                <input type="checkbox" name="check1" value="true"/> 표정인식
             </p>
             <input type="submit" value="확인" class="image-select-button">
             <input type="button" value="뒤로가기" class="image-select-button">

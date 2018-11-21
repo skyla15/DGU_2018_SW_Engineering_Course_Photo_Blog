@@ -3,7 +3,7 @@
     if(session.getAttribute("memId")==null){
 %>
 	<jsp:forward page="/login/loginPage.jsp" /> 
-ㅈ<%
+<%
     }
 %>
 <%
@@ -29,7 +29,7 @@
         </p>
         <hr>
         <p>
-        <%=filepath %> %>
+        <%=filepath %>
             <img src="${pageContext.request.contextPath}/<%=filepath %>" class="uploading-image">
         </p>
         <form action="postingUploadPro.jsp" method="post">
