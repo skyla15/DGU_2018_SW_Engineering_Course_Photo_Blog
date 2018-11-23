@@ -6,6 +6,7 @@
 <%@ page import="dbControl.MemberDAO" %>
 <%@ page import="dbControl.CommentDAO" %>
 <%@ page import="dbControl.CommentDTO" %>
+<%@ page import="dbControl.LikeDAO" %>
 <%@ page import="java.util.List" %>
 
 <%  //세션여부 확인하여 로그인여부 체크
@@ -49,7 +50,6 @@
         //단일 PostDTO객체를 post라는 이름으로 불러
         PostDTO post = postList.get(i);
 
-
         //post와 연관되는 댓글들을 불러오기 위해 CommentDTO의 인스턴스들을 담아올 commentList를 선언
         List<CommentDTO> commentList = null;
 
@@ -59,13 +59,15 @@
         //CommentDAO를 이용해 포스팅에 달린 댓글들을 객체 리스트로 담아서 가져옴
         commentList = commentDAO.getList(post.getId());
 
-
         // 포스팅을 불러오는 데 필요한 정보들을 DTO객체인 post에서 꺼내옴
         int userId = post.getUser_id();
         String postImg = post.getImage();
         int cntLike = post.getCnt_like();
         String content = post.getContent();
         int postId = post.getId();
+        
+        LikeDAO likeDao = new LikeDAO();
+        boolean islike = likeDao.isLike(memId, postId);
 %>
     <div class="post-box">
         <p class="post-top">
@@ -84,12 +86,18 @@
         </p>
         <div class="post-content">
             <p class="post-like">
-<!-- 좋아요 버튼 추가, 이미지 및 로직 추가 -->
-                <button>
-                	<img>
+
+			  <%if(islike == true){ %>
+                <button class="unfollow-button" onclick="location.href='${pageContext.request.contextPath}/like/unlike.jsp?user_id=<%=memId%>&post_id=<%=postId%>'">
+                	좋아요 
                 </button>
-<!-- 좋아요 버튼 추가, 이미지 및 로직 추가 -->
-                좋아요 <%=cntLike %>개
+              <%} else { %>  
+                <button class="follow-button" onclick="location.href='${pageContext.request.contextPath}/like/like.jsp?user_id=<%=memId%>&post_id=<%=postId%>'">
+                	좋아요 
+                </button>
+              <%} 		%>
+              <%=cntLike %>개	           
+
             </p>
             <p class="post-story">
                 <!--글쓴이의 이름을 불러와 하이퍼링크를 생성해주고, 글쓴이가 작성한 글을 불러온다. 줄바꿈 구현하기위해 replace함수를 사용 -->
@@ -106,16 +114,21 @@
 %>
                 <!--불러온 댓글 인스턴스로부터 정보를 얻어 하이퍼링크를 생성해주고 댓글내용을 불러와 표시해줌 -->
                 <b><a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%=comment.getUser_id()%>">
-                    <%=memDao.getUsername(comment.getUser_id()) %></b></a> <%=comment.getContent() %>
-                <br>
+                    <%=memDao.getUsername(comment.getUser_id()) %></b></a> <%=comment.getContent() %>&nbsp;&nbsp;&nbsp;
 <%
+		if(memId == comment.getUser_id()){
+%>
+		<a href="${pageContext.request.contextPath}/commentDeletePro.jsp?comment_id=<%=comment.getId()%>">[삭제]</a>
+		<br>
+<%			
+		}
     }
 %>
             </p>
             <hr>
             <!--댓글 작성하는 공간 -->
             <div class="post-input">
-                <!--좋아요 버튼(구현X) -->
+                
                 <img src="${pageContext.request.contextPath}/assets/icons/like_colored.png">
                 <!--댓글을 입력하면 commentPro.jsp로 보내 댓글을 저장하도록 함 -->
                 <form action="commentPro.jsp" method="post">

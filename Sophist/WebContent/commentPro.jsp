@@ -21,7 +21,7 @@
 <%
     }else if(check==0){
 %>
-</<script>
+<script>
     alert("댓글이 등록과정에서 오류가 발생했습니다.")
     location.href="${pageContext.request.contextPath}/index.jsp";
 </script>

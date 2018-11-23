@@ -69,6 +69,23 @@
     }
 
 %>
+
+<% 
+String postId = request.getParameter("postId");
+String hash = request.getParameter("hash");
+if(postId == null){ 
+%>
 <script>
     location.href = "${pageContext.request.contextPath}/PostEdit/postingEditPage.jsp?filepath=/images/<%= realFileName%>";
 </script>
+<% 
+}else{
+%>
+
+<script>
+    location.href = "${pageContext.request.contextPath}/PostEdit/postingModifyPage.jsp?filepath=/images/<%= realFileName%>&postId=<%= postId%>&hash=<%=hash%>";
+</script>
+
+<%	
+}
+%>

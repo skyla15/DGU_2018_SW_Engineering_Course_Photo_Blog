@@ -5,6 +5,7 @@
 <%@ page import="dbControl.MemberDAO" %>
 <%@ page import="dbControl.CommentDAO" %>
 <%@ page import="dbControl.CommentDTO" %>
+<%@ page import="dbControl.LikeDAO" %>
 <%@ page import="java.util.List" %>
 
 <%  //로그인 체크
@@ -48,6 +49,9 @@
             int cntLike = post.getCnt_like();
             String content = post.getContent();
             int postId = post.getId();
+            
+            LikeDAO likeDao = new LikeDAO();
+            boolean islike = likeDao.isLike(memId, postId);
     %>
     <div class="post-box">
         <p class="post-top">
@@ -63,12 +67,16 @@
         </p>
         <div class="post-content">
             <p class="post-like">
-<!-- 좋아요 버튼 추가, 이미지 및 로직 추가 -->
-                <button>
-                	<img>
+			  <%if(islike == true){ %>
+                <button class="unfollow-button" onclick="location.href='${pageContext.request.contextPath}/like/unlike.jsp?user_id=<%=memId%>&post_id=<%=postId%>'">
+                	좋아요 
                 </button>
-<!-- 좋아요 버튼 추가, 이미지 및 로직 추가 -->
-                좋아요 <%=cntLike %>개
+              <%} else { %>  
+                <button class="follow-button" onclick="location.href='${pageContext.request.contextPath}/like/like.jsp?user_id=<%=memId%>&post_id=<%=postId%>'">
+                	좋아요 
+                </button>
+              <%} 		%>
+              <%=cntLike %>개	   
             </p>
             <p class="post-story">
                 <b><a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%= userId%>">
@@ -80,11 +88,18 @@
                     for(int j=0; j<commentList.size(); j++){
                         CommentDTO comment = commentList.get(j);
                 %>
-                <b><a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%=comment.getUser_id()%>">
-                    <%=memDao.getUsername(comment.getUser_id()) %></b> <%=comment.getContent() %>
-                </a><br>
+	                <b>
+	                <a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%=comment.getUser_id()%>">
+	                    <%=memDao.getUsername(comment.getUser_id()) %></b> <%=comment.getContent() %>&nbsp;&nbsp;&nbsp;
+	                </a>    
                 <%
-                    }
+						if(memId == comment.getUser_id()){
+				%>
+						<a href="${pageContext.request.contextPath}/commentDeletePro.jsp?comment_id=<%=comment.getId()%>">[삭제]</a>
+						<br>
+                <%		
+                		}
+                   }
                 %>
             </p>
             <hr>

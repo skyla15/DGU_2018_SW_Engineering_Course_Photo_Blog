@@ -6,10 +6,11 @@
                   <img src="${pageContext.request.contextPath}/assets/icons/sophist.png" class="logo-image">
               </a>
           </span>
-    <span>
-              <form action="${pageContext.request.contextPath}/hashPostView.jsp" method="get" onsubmit="addSharp()" name="search">
-                  <input type="text" placeholder="검색" class="main-menu-search-box search-placeholder" name="hash" id="hash">
-              </form>
+    	  <span>
+              <form action="${pageContext.request.contextPath}/SearchRedirect.jsp" method="get" onsubmit="addSharp()" name="search">
+                  <input type="text" placeholder="검색" class="main-menu-search-box search-placeholder" name="searchStr" id="searchStr">
+              </form>            
+
           </span>
     <span>
         <a href="${pageContext.request.contextPath}/totalPostView.jsp">
@@ -27,8 +28,10 @@
 
 <script>
     function addSharp(){
-        var hashContent = document.getElementById("hash").value;
-        document.search.hash.value= "#" + hashContent;
+        var hashContent = document.getElementById("searchStr").value;
+        if(hashContent[0] != '@'){//@를 붙이면 유저검색
+        	document.search.searchStr.value= "#" + hashContent;
+	    }
         document.getElementByName("search").submit();
     }
 </script>

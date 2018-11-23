@@ -366,6 +366,17 @@ body{
     margin-right: auto;
 }
 
+.profile-search-image{
+    margin-top:0;
+    margin-bottom:0;
+    height: 150px;
+    width: 150px;
+    border-radius: 25%;
+    display:block;
+    margin-left: auto;
+    margin-right: 0;
+}
+
 .profile-header-contents{
     position:relative;
     display:flex;
@@ -528,16 +539,16 @@ body{
 
 .profile-post {
     width: 100%;
-    margin-right: 28px;
-    margin-bottom: 28px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     max-width: 293px;
     max-height: 293px;
 }
 
 .profile-post img {
     width: 100%;
-    margin-right: 28px;
-    margin-bottom: 28px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     flex-shrink: 0;
     max-width: 293px;
     max-height: 293px;
@@ -670,6 +681,21 @@ body{
     text-align: center;
 }
 
+.post-edit-button{
+    line-height: 29px;
+    height: 29px;
+    padding: 0 11px;
+    cursor: pointer;
+    color: #0095ff;
+    border-radius: 3px;
+    border: solid 1px #0095ff;
+    background: transparent;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 600;
+    margin: auto;
+}
+
 .post-delete-button{
     line-height: 29px;
     height: 29px;
@@ -685,9 +711,56 @@ body{
     margin: auto;
 }
 
+.Search-user-main{
+	margin: 1em auto 1em auto;
+    position: relative;
+    text-align: center;
+}
+
+.Search-user-area{
+	margin: 1em auto 1em auto;
+    position: relative;
+    text-align: center;
+}
+
 .loout_icon{
 	padding = 10px;
 	width = 10px;
 	height = 10px;
 }
+
+.tab{
+	overflow:hidden;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
+	margin: 0;
+	padding: 0;
+}
+
+.tab button{
+	background-color: inherit;
+	float:left;
+	border:none;
+	outline:none;
+	cursor:pointer;
+	padding:14px 16px;
+	transition: 0.3s;
+	font-size: 17px;
+}
+
+.tab button:hover{
+	background-color:#ddd;
+}
+
+.tab button.active{
+	background-color:#ccc
+}
+
+.tabcontent{
+	display:none;
+	border: 1px solid #ccc;
+	border-top:none;
+}
+
+
 }

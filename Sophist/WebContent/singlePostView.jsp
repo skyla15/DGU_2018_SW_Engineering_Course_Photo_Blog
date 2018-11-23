@@ -4,6 +4,7 @@
 <%@ page import="dbControl.MemberDAO" %>
 <%@ page import="dbControl.CommentDAO" %>
 <%@ page import="dbControl.CommentDTO" %>
+<%@ page import="dbControl.LikeDAO" %>
 <%@ page import="java.util.List" %>
 
 <%  //로그인 체크
@@ -51,6 +52,9 @@
         List<CommentDTO> commentList = null;
         CommentDAO commentDAO = new CommentDAO();
         commentList = commentDAO.getList(post.getId());
+        
+        LikeDAO likeDao = new LikeDAO();
+        boolean islike = likeDao.isLike(memId, postId);
 %>
 <div class="content-area">
     <div class="post-box">
@@ -68,7 +72,16 @@
         <div class="single-post-contents">
             <div class="post-content">
                 <p class="post-like">
-                    좋아요 <%=cntLike %>개
+                <%if(islike == true){ %>
+                <button class="unfollow-button" onclick="location.href='${pageContext.request.contextPath}/like/unlike.jsp?user_id=<%=memId%>&post_id=<%=postId%>'">
+                	좋아요 
+                </button>
+              <%} else { %>  
+                <button class="follow-button" onclick="location.href='${pageContext.request.contextPath}/like/like.jsp?user_id=<%=memId%>&post_id=<%=postId%>'">
+                	좋아요 
+                </button>
+              <%} 		%>
+              <%=cntLike %>개	       
                 </p>
                 <p class="post-story">
                     <b><a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%= userId%>">
@@ -81,10 +94,14 @@
                             CommentDTO comment = commentList.get(j);
                     %>
                     <b><a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%=comment.getUser_id()%>">
-                        <%=memDao.getUsername(comment.getUser_id()) %></b></a> <%=comment.getContent() %>
-                    <br>
+                        <%=memDao.getUsername(comment.getUser_id()) %></b></a> <%=comment.getContent() %>&nbsp;&nbsp;&nbsp;
                     <%
-                        }
+							if(memId == comment.getUser_id()){
+					%>
+							<a href="${pageContext.request.contextPath}/commentDeletePro.jsp?comment_id=<%=comment.getId()%>">[삭제]</a>
+							<br>
+                    <%		}
+                      	}
                     %>
                 </p>
             </div>
@@ -96,8 +113,11 @@
     <%=postId %>
 
     <div class="delete-button-div">
+        <button class="post-edit-button" onclick="location.href='${pageContext.request.contextPath}/PostEdit/postingModifyPage.jsp?postId=<%=postId%>'">        
+           	 수정
+        </button>
         <button class="post-delete-button" onclick="location.href='${pageContext.request.contextPath}/PostEdit/deletePost.jsp?post_id=<%=postId%>'">        
-            삭제
+           	 삭제
         </button>
     </div>
 <%

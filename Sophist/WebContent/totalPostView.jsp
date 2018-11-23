@@ -4,6 +4,7 @@
 <%@ page import="dbControl.MemberDAO" %>
 <%@ page import="dbControl.CommentDAO" %>
 <%@ page import="dbControl.CommentDTO" %>
+<%@ page import="dbControl.LikeDAO" %>
 <%@ page import="java.util.List" %>
 
 <%  //로그인 체크
@@ -26,6 +27,7 @@
 
 <jsp:include page="/mainMenu.jsp" flush="false"></jsp:include>
 <%
+	int memId = (Integer)session.getAttribute("memId");
     List<PostDTO> postList = null;
     PostDAO postDao = new PostDAO();
     postList = postDao.getTotalList();
@@ -47,11 +49,10 @@
             int cntLike = post.getCnt_like();
             String content = post.getContent();
             int postId = post.getId();
+            
+            LikeDAO likeDao = new LikeDAO();
+            boolean islike = likeDao.isLike(memId, postId);
     %>
-    
-<!-- 테스트용 -->
-    <%=postId %>
-<!-- 테스트용 -->
 
     <div class="post-box">
         <p class="post-top">
@@ -65,21 +66,23 @@
         <p>
             <img src="${pageContext.request.contextPath}<%=postImg%>" class="post-img">
         </p>
+<!-- 좋아요 css 바꾸기 -->        
         <div class="post-content">
             <p class="post-like">
             
-<!-- 좋아요 버튼 추가, 이미지 및 로직 추가 -->
-
-                <button>
-                버튼 
-                	<img>
+			  <%if(islike == true){ %>
+                <button class="unfollow-button" onclick="location.href='${pageContext.request.contextPath}/like/unlike.jsp?user_id=<%=memId%>&post_id=<%=postId%>'">
+                	좋아요 
                 </button>
-<!-- 좋아요 버튼 추가, 이미지 및 로직 추가 -->
-                좋아요 <%=cntLike %>개	                
+              <%} else { %>  
+                <button class="follow-button" onclick="location.href='${pageContext.request.contextPath}/like/like.jsp?user_id=<%=memId%>&post_id=<%=postId%>'">
+                	좋아요 
+                </button>
+              <%} 		%>
+            <%=cntLike %>개	                
             </p>
-            
-            
-            
+<!-- 좋아요 css 바꾸기 -->
+                        
             <p class="post-story">
                 <b><a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%= userId%>">
                     <%=memDao.getUsername(userId) %></a></b> <%=content.replace("\r\n","<br>") %>
@@ -87,14 +90,21 @@
             </p>
             <p class="post-comment">
                 <%
-                    for(int j=0; j<commentList.size(); j++){
-                        CommentDTO comment = commentList.get(j);
+                  for(int j=0; j<commentList.size(); j++){
+                      CommentDTO comment = commentList.get(j);
                 %>
                 <b><a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%=comment.getUser_id()%>">
-                    <%=memDao.getUsername(comment.getUser_id()) %></b></a> <%=comment.getContent() %>
-                <br>
+                    <%=memDao.getUsername(comment.getUser_id()) %></b></a> <%=comment.getContent() %>&nbsp;&nbsp;&nbsp;
+                
                 <%
-                    }
+					if(memId == comment.getUser_id()){
+				%>
+					<a href="${pageContext.request.contextPath}/commentDeletePro.jsp?comment_id=<%=comment.getId()%>">[삭제]</a>
+					<br>
+               
+                <%
+					}
+				}
                 %>
             </p>
             <hr>
