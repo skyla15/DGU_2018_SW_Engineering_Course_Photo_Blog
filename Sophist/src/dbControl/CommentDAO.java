@@ -15,7 +15,7 @@ public class CommentDAO {
         dbconnect = new DBConnect();
     }
 
-    //�뙎湲� �쟾泥� 紐⑸줉 媛��졇�삤湲�
+    //게시물 id로 게시물에 달린 댓글을 가져오는 메소드
     public List<CommentDTO> getList(int post_id) throws Exception{
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -51,7 +51,7 @@ public class CommentDAO {
         return list;
     }
 
-    //�뙎湲� �엯�젰�븯湲�
+    //게시물에 댓글을 다는 메소드
     public int insertComment(int user_id, int post_id, String content){
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -75,6 +75,7 @@ public class CommentDAO {
         return check;
     }
     
+    //댓글 아이디로 조회하여 댓글을 삭제하는 메소드
     public int deleteComment(int comment_id) throws Exception{
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -84,6 +85,28 @@ public class CommentDAO {
             sql="DELETE FROM insta.comment WHERE id = ?";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, comment_id);
+
+            pstmt.executeUpdate();
+
+            check = 1;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBClose.close(con, pstmt);
+        }
+        return check;
+    }
+    
+    //userid로 댓글을 조회하여 삭제하는 메소드
+    public int deleteCommentUsedUserId(int userId) throws Exception{
+        Connection con = dbconnect.getConnection();
+        PreparedStatement pstmt = null;
+        int check = 0;
+
+        try{
+            sql="DELETE FROM insta.comment WHERE user_id = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, userId);
 
             pstmt.executeUpdate();
 

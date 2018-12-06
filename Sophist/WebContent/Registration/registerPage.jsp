@@ -28,10 +28,10 @@
                 <label for="password">Password </label><br>
                 <input type="password" name="password" placeholder="********" id="password">
             </p>
-            <br>
             <p>
-                &nbsp;<input type="submit" id="register-button" value="제출">&nbsp;
-                <input type="button" id="register-button" value="취소">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" id="register-button" value="제출">&nbsp;
+                <input type="button" onClick="history.back()" id="register-button" value="취소">
             </p>
         </form>
 

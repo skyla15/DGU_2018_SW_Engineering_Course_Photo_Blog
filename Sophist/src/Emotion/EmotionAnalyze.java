@@ -3,7 +3,7 @@ package Emotion;
 import java.net.URI;
 import java.io.*;
 
-//MS FACE API�� ���� MSŬ���� ������ �̹��� �м� ������ httpComponent import
+//MS FACE API占쏙옙 占쏙옙占쏙옙 MS클占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱뱄옙占쏙옙 占싻쇽옙 占쏙옙占쏙옙占쏙옙 httpComponent import
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.*;
 import org.apache.http.HttpResponse;
@@ -16,10 +16,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.commons.codec.binary.Base64;
 
-//json ��ü�� ó���ϱ�(�Ľ�)�ϱ� ���� import
+//json 占쏙옙체占쏙옙 처占쏙옙占싹깍옙(占식쏙옙)占싹깍옙 占쏙옙占쏙옙 import
 import org.json.*;
 
-//�м� ����� �̹����� ��ġ�� ���� java.awt import
+//占싻쇽옙 占쏙옙占쏙옙占� 占싱뱄옙占쏙옙占쏙옙 占쏙옙치占쏙옙 占쏙옙占쏙옙 java.awt import
 import java.awt.image.*;
 import java.awt.Color;
 import java.awt.Font;
@@ -67,7 +67,7 @@ public class EmotionAnalyze {
             URI uri = builder.build();
             HttpPost request = new HttpPost(uri);
             request.setHeader("Content-Type", "application/octet-stream");
-            // 프로젝트 시 키를 나중에 변경 필요 
+            // �봽濡쒖젥�듃 �떆 �궎瑜� �굹以묒뿉 蹂�寃� �븘�슂 
             request.setHeader("Ocp-Apim-Subscription-Key", "250c2043f4784659aa489aeeaa4b3a48");
 
             request.setEntity(new FileEntity(InputFile));
@@ -123,29 +123,29 @@ public class EmotionAnalyze {
         	Font font = new Font("Serif", Font.BOLD, 10);
         	
         	
-        	// 화남 
-        	graphics.drawString("Angry : " + angerRate, leftPosition - 85, topPosition + 10);
+        	// �솕�궓 
+        	graphics.drawString("화남 : " + angerRate, leftPosition - 85, topPosition + 10);
         	
-        	// 경명 
-        	graphics.drawString("Cons.. : " + contemptRate, leftPosition - 85, topPosition + 25);
+        	// 寃쎈챸 
+        	graphics.drawString("경멸 : " + contemptRate, leftPosition - 85, topPosition + 25);
         	
-        	//역겨움 
-        	graphics.drawString("���ܿ� : " + disgustRate, leftPosition - 85, topPosition + 40);
+        	//�뿭寃⑥� 
+        	graphics.drawString("역겨움 : " + disgustRate, leftPosition - 85, topPosition + 40);
         	
-        	// 두려움 
-        	graphics.drawString("�η��� : " + fearRate, leftPosition - 85, topPosition + 55);
+        	// �몢�젮�� 
+        	graphics.drawString("두려움 : " + fearRate, leftPosition - 85, topPosition + 55);
         	
-        	// 행복 
-        	graphics.drawString("�ູ : " + happinessRate, leftPosition - 85, topPosition + 70);
+        	// �뻾蹂� 
+        	graphics.drawString("행복 : " + happinessRate, leftPosition - 85, topPosition + 70);
         	
-        	// 무표정 
-        	graphics.drawString("�߸� : " + neutralRate, leftPosition - 85, topPosition + 85);
+        	// 臾댄몴�젙 
+        	graphics.drawString("중립 : " + neutralRate, leftPosition - 85, topPosition + 85);
         	
-        	// 슬픔 
-        	graphics.drawString("���� : " + sadnessRate, leftPosition - 85, topPosition + 100);
+        	// �뒳�뵒 
+        	graphics.drawString("슬픔 : " + sadnessRate, leftPosition - 85, topPosition + 100);
         	
-        	// 놀라움 
-        	graphics.drawString("��� : " + surpriseRate, leftPosition - 85, topPosition + 115);
+        	// ���씪�� 
+        	graphics.drawString("놀람 : " + surpriseRate, leftPosition - 85, topPosition + 115);
         	
         	
         	try{

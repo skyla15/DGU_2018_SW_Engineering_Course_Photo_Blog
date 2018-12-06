@@ -29,7 +29,6 @@
         </p>
         <hr>
         <p>
-        <%=filepath %>
             <img src="${pageContext.request.contextPath}/<%=filepath %>" class="uploading-image">
         </p>
         <form action="postingUploadPro.jsp" method="post">
@@ -40,7 +39,7 @@
             </p>
             <p>
                 <input type="submit" value="작성" class="upload-button">
-                <input type="button" value="취소" class="upload-button">
+                <input type="button" value="취소" class="upload-button" onClick="history.back()">
             </p>
         </form>
     </div>

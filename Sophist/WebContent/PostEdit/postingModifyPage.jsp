@@ -55,7 +55,7 @@
             </p>
             <p>
                 <input type="submit" value="수정" class="upload-button">
-                <input type="button" value="취소" class="upload-button">
+                <input type="button" value="취소" class="upload-button" onClick="history.back()">
             </p>
         </form>
     </div>

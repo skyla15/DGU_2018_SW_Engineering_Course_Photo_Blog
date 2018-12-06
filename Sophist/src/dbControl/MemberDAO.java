@@ -16,7 +16,7 @@ public class MemberDAO {
         dbconnect = new DBConnect();
     }
 
-    //�쉶�썝媛��엯 湲곕뒫 援ы쁽
+    //회원가입을 할 경우 호출하는 메소드
     public void insertMember(MemberDTO dto) throws Exception{
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -37,8 +37,42 @@ public class MemberDAO {
             DBClose.close(con, pstmt);
         }
     }
+    public List<MemberDTO> getAllMember(){
+    	Connection con = dbconnect.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<MemberDTO>list = null;
 
-    // 濡쒓렇�씤湲곕뒫 援ы쁽
+        try{
+        	sql = "SELECT * from insta.members";
+            pstmt = con.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                list = new ArrayList<MemberDTO>();
+
+                do{
+                	MemberDTO user = new MemberDTO();
+                	user.setId(rs.getInt("id"));
+                	user.setNick(rs.getString("username"));
+                	user.setEmail(rs.getString("email"));
+                	user.setProfile_img(rs.getString("profile_img"));
+                	user.setProfile_comment(rs.getString("profile_comment"));
+                	
+                    list.add(user);
+                }while(rs.next());
+            }else {
+                list = Collections.EMPTY_LIST;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBClose.close(con,pstmt);
+        }
+        return list;
+    }
+
+    //로그인을 할 경우 호출하는 메소드
     public int userCheck(String email, String password) throws Exception{
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -55,12 +89,12 @@ public class MemberDAO {
             if(rs.next()){
                 dbpassword = rs.getString("pass");
                 if(dbpassword.equals(password))
-                    x = 1; //�씤利앹꽦怨�
+                    x = 1; //패스워드가 맞을시
                 else
-                    x = 0; //�씤利앹떎�뙣
+                    x = 0; //패스워드가 틀릴시
             }
             else
-                x = -1; //�씪移섑븯�뒗 �씠硫붿씪 �뾾�쓬
+                x = -1; 
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -69,7 +103,7 @@ public class MemberDAO {
         return x;
     }
 
-    //�봽濡쒗븘 �젙蹂� �뼸�뼱�삤湲�
+    //유저 아이디로부터 유저 정보를 반환오는 메소드
     public MemberDTO getProfile(int user_id) throws Exception{
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -101,7 +135,7 @@ public class MemberDAO {
         return profile;
     }
 
-    // �봽�궗 �뼸�뼱�삤湲�
+    // 유저 아이디로부터 프로필 이미지 주소를 반환하는 메소드
     public String getProfileImg(int user_id)throws Exception{
         Connection  con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -127,7 +161,7 @@ public class MemberDAO {
         return profileImg;
     }
 
-    //User Name �뼸�뼱�삤湲�
+    //유저 아이디로부터 유저 이름을 반환하는 메소드
     public String getUsername(int user_id)throws Exception{
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -152,7 +186,7 @@ public class MemberDAO {
         }
         return nickName;
     }
-    
+    //유저 이메일로 조회하여 유저들을 반환하는 메소드
     public List<MemberDTO> getUserList(String userID_EMAIL) throws Exception{
     	Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -192,7 +226,7 @@ public class MemberDAO {
         return list;
     }
 
-    //�쑀�� �냼媛쒓� 媛��졇�삤湲�
+    //유저 아이디로 조회하여 프로플 코멘트를 반환하는 메소드
     public String getProfileComment(int user_id){
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -218,7 +252,7 @@ public class MemberDAO {
         return profileComment;
     }
 
-    //email濡� user_id媛��졇�삤
+    //email로 조회하여 유저 아이디를 반환하는 메소드
     public int getUser_id(String user_email)throws Exception{
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -244,7 +278,31 @@ public class MemberDAO {
         return user_id;
     }
 
-    //ID 以묐났 泥댄겕
+    //유저의 권한을 반환하는 메소드 (일반 유저 : normal, 관리자 : manager )
+    public String getAuth(String user_email)throws Exception{
+        Connection con = dbconnect.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String userAuth = null;
+
+        try{
+            sql = "SELECT auth from insta.members WHERE email = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, user_email);
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
+            	userAuth = rs.getString("auth");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBClose.close(con, pstmt);
+        }
+        return userAuth;
+    }
+    
+    //유저 아이디로 존재유무를 체크하는 메소드
     public int checkID(String id) {
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -259,9 +317,9 @@ public class MemberDAO {
             rs = pstmt.executeQuery();
 
             if(rs.next()){
-                checkNum = 1;   //以묐났�븘�씠�뵒 議댁옱
+                checkNum = 1;   //존재하지 않으면
             }else{
-                checkNum = 0;   //以묐났�븘�씠�뵒 �뾾�쓬
+                checkNum = 0;   //존재하면
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -271,7 +329,7 @@ public class MemberDAO {
         return checkNum;
     }
 
-    //�봽濡쒗븘 蹂�寃쎌뿉�꽌 ID以묐났 泥댄겕
+    //유저의 닉네임을 변경할 시 호출하는 메소드
     public int changeNickCheck(int user_id, String nick) throws Exception{
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -288,12 +346,12 @@ public class MemberDAO {
             if(rs.next()){
                 String dbUserName = rs.getString("username");
                 if (dbUserName.equals(recievedNick)){
-                    checkNum = 0;   //�쑀���꽕�엫�씠 以묐났�씠吏�留� �옄�떊�쓽 寃껋씠誘�濡� �삤瑜� �뾾�씠 �넻怨�
+                    checkNum = 0;   
                 }else{
-                    checkNum = checkID(recievedNick);   //�쑀���꽕�엫�씠 蹂�寃쎈맂 寃쎌슦 checkID method瑜� �궗�슜
+                    checkNum = checkID(recievedNick);   
                 }
             }else {
-                checkNum = 1;      //�빐�떦 �븘�씠�뵒�� �쑀���꽕�엫�씠 議댁옱�븯吏� �븡�쑝誘�濡� �삤瑜�
+                checkNum = 1;      
             }
         }catch (Exception e){
 
@@ -303,7 +361,7 @@ public class MemberDAO {
         return checkNum;
     }
 
-    //EMAIL 以묐났 泥댄겕
+    //이메일르 멤버의 아이디를 반환하는 메소드
     public int checkEmail(String email) {
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -318,9 +376,9 @@ public class MemberDAO {
             rs = pstmt.executeQuery();
 
             if(rs.next()){
-                checkNum = 1;   //以묐났�씠硫붿씪 議댁옱
+                checkNum = 1;   
             }else{
-                checkNum = 0;   //以묐났�씠硫붿씪 �뾾�쓬
+                checkNum = 0;   
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -330,7 +388,7 @@ public class MemberDAO {
         return checkNum;
     }
 
-    // �쉶�썝�젙蹂� �닔�젙
+    // 회원의 정보를 갱신하는 메소드
     public int updateProfile(MemberDTO member) {
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -356,7 +414,7 @@ public class MemberDAO {
         return check;
     }
 
-    //�봽濡쒗븘 �궗吏� �닔�젙
+    //회원의 프로필 사진을 갱신하는 메소드
     public int updateProfileImage(int user_id, String image) throws Exception{
         Connection con = dbconnect.getConnection();
         PreparedStatement pstmt = null;
@@ -383,6 +441,7 @@ public class MemberDAO {
         return check;
     }
     
+    //유저가 팔로우 하고있는 회원들을 반환하는 메소드
     public List<MemberDTO> getFollowingList(int user_id) throws Exception{
     	//System.out.println(user_id);
         Connection con = dbconnect.getConnection();
@@ -423,7 +482,7 @@ public class MemberDAO {
         }
         return list;
     }
-    
+    //유저가 팔로우하고 있는 회원의 수를 반환하는 메소드
     public int getFollowingCount(int user_id) throws Exception{
     	//System.out.println(user_id);
         Connection con = dbconnect.getConnection();
@@ -453,6 +512,7 @@ public class MemberDAO {
         return FollowingNumber;
     }
     
+    //유저 아이디로 팔로우 하고있는 회원들을 반환하는 메소드
     public List<MemberDTO> getFollowerList(int user_id) throws Exception{
     	//System.out.println(user_id);
         Connection con = dbconnect.getConnection();
@@ -493,7 +553,7 @@ public class MemberDAO {
         }
         return list;
     }
-    
+    //
     public int getFollowerCount(int user_id) throws Exception{
     	//System.out.println(user_id);
         Connection con = dbconnect.getConnection();
@@ -522,6 +582,84 @@ public class MemberDAO {
         }
         return FollowerNumber;
     }
+    //유저 아이디로 조회하여 회원을 삭제하는 메소드
+    public int deleteMember(int userId) throws Exception{
+        Connection con = dbconnect.getConnection();
+        PreparedStatement pstmt = null;
+        int check = 0;
 
+        try{
+            sql="DELETE FROM insta.members WHERE id = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, userId);
+
+            pstmt.executeUpdate();
+
+            check = 1;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBClose.close(con, pstmt);
+        }
+        return check;
+    }
+    //유저 아이디로 멤버를 조회하여 삭제하는 메소드
+    public int deleteRelateMember(int userId) throws Exception{
+        Connection con = dbconnect.getConnection();
+        PreparedStatement pstmt = null;
+        int check = 0;
+
+        try{
+            sql="DELETE FROM insta.members WHERE id = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, userId);
+
+            pstmt.executeUpdate();
+
+            check = 1;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBClose.close(con, pstmt);
+        }
+        return check;
+    }
+    // 컬럼 이름과 조건으로 멤버들을 반환하는 메소드
+    public List<MemberDTO> getList(String where, String is) throws Exception{
+        Connection con = dbconnect.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<MemberDTO>list = null;
+
+        try{
+            sql = "SELECT * FROM insta.members WHERE "+where+" LIKE ? ORDER BY id DESC";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, "%"+is+"%");
+
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                list = new ArrayList<MemberDTO>();
+
+                do{
+                	MemberDTO user = new MemberDTO();
+                	user.setId(rs.getInt("id"));
+                	user.setNick(rs.getString("username"));
+                	user.setEmail(rs.getString("email"));
+                	user.setProfile_img(rs.getString("profile_img"));
+                	user.setProfile_comment(rs.getString("profile_comment"));
+                	
+                    list.add(user);
+                }while(rs.next());
+            }else {
+                list = Collections.EMPTY_LIST;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBClose.close(con,pstmt);
+        }
+        return list;
+    }
 }
 

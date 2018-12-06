@@ -8,7 +8,7 @@ public class DBConnect {
     }
 
     public Connection getConnection() {
-        String url = "jdbc:mysql://localhost:3306/insta";
+        String url = "jdbc:mysql://localhost:3306/insta?useUnicode=true&characterEncoding=utf8";
         String id = "sophist";
         String pw = "1234";
 

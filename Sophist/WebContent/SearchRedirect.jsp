@@ -19,7 +19,8 @@
     String searchStr = request.getParameter("searchStr");
     
     if( searchStr.charAt(0) != '@'){
-    	String hash = searchStr.substring(1);
+        String hash = searchStr.substring(1);
+ 	
 %>
 	<script>
 	    location.href="${pageContext.request.contextPath}/hashPostView.jsp?hash=%23<%=hash%>";
@@ -27,6 +28,15 @@
 <%
     }else{
     	String searchUser = searchStr.substring(1);
+    	if(searchUser.length() == 0 || (searchUser.charAt(0)>='!' && searchUser.charAt(0)<='/') || (searchUser.charAt(0)>=':' && searchUser.charAt(0)<='@' ) || (searchUser.charAt(0)>='[' && searchUser.charAt(0)<='`'))
+    	{
+%>
+			<script>
+				alert("검색할 유저명을 입력해주세요.");
+				history.back(-1);
+			</script>
+<%
+    	}
 %>
 	<script>
 	    location.href="${pageContext.request.contextPath}/userSearchView.jsp?searchUser=<%=searchUser%>";

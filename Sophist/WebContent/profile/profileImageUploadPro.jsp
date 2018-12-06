@@ -38,17 +38,25 @@
 
 	        // 업로드한 파일들의 이름을 얻어옴
 	        String file = (String)files.nextElement();
-	        filename = multi.getFilesystemName(file);	
-		
-        
+	        
+	        
+	        filename = multi.getFilesystemName(file);
+	        if(filename == null){
+	        	filename="no_profile.png";
+	  	        realFileName = "no_profile.png";
+	        }else {
+	            String now = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());
+	            int i = -1;
+	            i = filename.lastIndexOf("."); // 파일 확장자 위치
+	            realFileName = now + filename.substring(i, filename.length());  //현재시간과 확장자 합치기
+	        }
+	        //System.out.println("file name : "+filename);
        //현재시간으로 파일명 변경
-        String now = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());
-        int i = -1;
-        i = filename.lastIndexOf("."); // 파일 확장자 위치
-        realFileName = now + filename.substring(i, filename.length());  //현재시간과 확장자 합치기
+
 
         File oldFile = new File(uploadPath + "/" + filename);
         File newFile = new File(uploadPath + "/" + profile + realFileName);
+        
 
         oldFile.renameTo(newFile);
 

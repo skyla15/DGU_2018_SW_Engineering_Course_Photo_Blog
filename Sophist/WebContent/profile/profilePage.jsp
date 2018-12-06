@@ -75,11 +75,21 @@
                             <button onclick="dropDown()" class="dropbtn profile-button">&nabla;</button>
                             <div id="myDropdown" class="dropdown-content">
                                 <a href="${pageContext.request.contextPath}/logout.jsp">로그아웃</a>
+                                <a href=# onclick="check();">회원탈퇴</a>
                             </div>
                         </div>
                     
 <%
-        			}else if (isFollowing == true){ //팔로우중인 사람일때 해당 버튼이 표시됨
+        			}else if(session.getAttribute("AuthLevel").equals("manager")){
+%> 
+                        <button class="profile-button"
+                                onclick="location.href='${pageContext.request.contextPath}/profile/profileEditPage.jsp?user_id=<%=requestedUserId %>'">프로필 편집</button>&nbsp;&nbsp;&nbsp;
+                           
+						 						<button class="profile-button"
+                                onclick="location.href='${pageContext.request.contextPath}/withdrawal.jsp?userId=<%= requestedUserId %>'">회원 삭제</button>&nbsp;&nbsp;&nbsp;
+<%        			
+        			}
+       				else if (isFollowing == true){ //팔로우중인 사람일때 해당 버튼이 표시됨
 %>
 		          	<button class="unfollow-button" onclick="location.href='${pageContext.request.contextPath}/follow/unfollow.jsp?user_id=<%=memId%>&following_id=<%=requestedUserId%>'">
 		            	팔로잉
@@ -160,75 +170,81 @@
 			
 			<div id="Following" class="tabcontent">
 				<%
-					for(int i=0; i<followingList.size(); i++){
+				        for(int i=0; i<followingList.size(); i+=3){
 				%>
-				    <div class="profile-posts-row row">
+				            <div class="profile-posts-row">
 				<%
-						MemberDTO memberInfo = followingList.get(i);
-						int followingId = memberInfo.getId();
-						String followingUserNick = memberInfo.getNick();
-						String followingUserEmail = memberInfo.getEmail();
-						String followingUserProfileImg = memberInfo.getProfile_img();
-						String followingUserProfileComment = memberInfo.getProfile_comment();
+				            for(int j = i; j < i+3; j++){
+				                if(j<followingList.size()){
+									MemberDTO memberInfo = followingList.get(j);
+									int followingId = memberInfo.getId();
+									String followingUserNick = memberInfo.getNick();
+									String followingUserEmail = memberInfo.getEmail();
+									String followingUserProfileImg = memberInfo.getProfile_img();
+									String followingUserProfileComment = memberInfo.getProfile_comment();
 				%>
-				
-					    <div class="col-sm-4"> 
-					    <div class="row">             	
-							<a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%=followingId %>#">
-							<div class="col-sm-4" style="width:150px; margin:auto">
-								<img class="profile-image" src="${pageContext.request.contextPath}<%=followingUserProfileImg%>" alt="Card image" style="width:100%">
-							</div>
-							<div class="col-sm-4">
-									<h4 class="card-title"> <%= followingUserNick %></h4>
-									<p class="card-text"><strong>Email : <%= followingUserEmail %></strong></p>
-									<p class="card-text"><%= followingUserProfileComment %></p>
-							</div>
-							</a>
-						</div>
-						</div>
-	  
-		            </div>
+								    <div id="following" class="col-sm-4"> 
+									    <div class="row">             	
+											<a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%=followingId %>#">
+											<div class="col-sm-4" style="width:150px; margin:auto">
+												<img class="profile-image" src="${pageContext.request.contextPath}<%=followingUserProfileImg%>" alt="Card image" style="width:100%">
+											</div>
+											<div class="col-sm-4">
+													<h4 class="card-title"> <%= followingUserNick %></h4>
+													<p class="card-text"><strong>Email : <%= followingUserEmail %></strong></p>
+													<p class="card-text"><%= followingUserProfileComment %></p>
+											</div>
+											</a>
+										</div>
+										</div>
 				<%
-				    }
+				                }
+				            }
+				%>
+				            </div>
+				<%
+				        }
 				%>
 			</div>
 	
 			<div id="Follower" class="tabcontent">
 				<%
-					for(int i=0; i<followerList.size(); i++){
+				        for(int i=0; i<followerList.size(); i+=3){
 				%>
-				    <div class="profile-posts-row">
+				            <div class="profile-posts-row">
 				<%
-						MemberDTO memberInfo = followerList.get(i);
-						int followerId = memberInfo.getId();
-						String followerUserNick = memberInfo.getNick();
-						String followerUserEmail = memberInfo.getEmail();
-						String followerUserProfileImg = memberInfo.getProfile_img();
-						String followerUserProfileComment = memberInfo.getProfile_comment();
+				            for(int j = i; j < i+3; j++){
+				                if(j<followerList.size()){
+									MemberDTO memberInfo = followerList.get(j);
+									int followerId = memberInfo.getId();
+									String followerUserNick = memberInfo.getNick();
+									String followerUserEmail = memberInfo.getEmail();
+									String followerUserProfileImg = memberInfo.getProfile_img();
+									String followerUserProfileComment = memberInfo.getProfile_comment();
 				%>
-
-		                
-		                <div class="col-sm-4"> 
-					    <div class="row">             	
-							<a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%=followerId %>#">
-							<div class="col-sm-4" style="width:150px; margin:auto">
-								<img class="profile-image" src="${pageContext.request.contextPath}<%=followerUserProfileImg%>" alt="Card image" style="width:100%">
-							</div>
-							<div class="col-sm-4">
-									<h4 class="card-title"> <%= followerUserNick %></h4>
-									<p class="card-text"><strong>Email : <%= followerUserEmail %></strong></p>
-									<p class="card-text"><%= followerUserProfileComment %></p>
-							</div>
-							</a>
-						</div>
-						</div>
-
-		            </div>
+				                <div id="follower" class="col-sm-4"> 
+							    <div class="row">             	
+									<a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%=followerId %>#">
+									<div class="col-sm-4" style="width:150px; margin:auto">
+										<img class="profile-image" src="${pageContext.request.contextPath}<%=followerUserProfileImg%>" alt="Card image" style="width:100%">
+									</div>
+									<div class="col-sm-4">
+											<h4 class="card-title"> <%= followerUserNick %></h4>
+											<p class="card-text"><strong>Email : <%= followerUserEmail %></strong></p>
+											<p class="card-text"><%= followerUserProfileComment %></p>
+									</div>
+									</a>
+								</div>
+								</div>
 				<%
-				    }
+				                }
+				            }
+				%>
+				            </div>
+				<%
+				        }
 				%>
 			</div>
-        
 
         </div>
     </div>
@@ -250,6 +266,17 @@
 		document.getElementById(TabName).style.display = "block";
 		evt.currentTarget.className += " active";
 	}
+	
+	function check(){
+	    if(confirm("정말로 탈퇴하시겠습니까?")){
+	    	location.href="${pageContext.request.contextPath}/withdrawal.jsp?userId="+<%=memId%>;
+	    	//location.href = "write_del_ok.jsp?num=1";
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+
 	</script>
 </div>
 </body>

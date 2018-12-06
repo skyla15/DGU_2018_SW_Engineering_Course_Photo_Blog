@@ -40,8 +40,10 @@
             <p>
                 <input type="file" value="이미지 선택" name="filename"><br>
             </p>
+            <div style="text-align:center">
             <input type="submit" value="확인" class="image-select-button">
-            <input type="button" value="뒤로가기" class="image-select-button">
+            <input type="button" onClick="history.back()" value="뒤로가기" class="image-select-button">
+            </div>
         </form>
     </div>
 </div>

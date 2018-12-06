@@ -27,6 +27,7 @@
 	MemberDAO memDao = new MemberDAO();
 	List<MemberDTO> userList = memDao.getUserList(searchUser);
 %>
+
 <div class="content-area row">
 
 <%
@@ -41,7 +42,7 @@
 %>
        
             
-    <div class="col-sm-4">              	
+    <div id="user" class="col-sm-4">              	
 		<div class="card" style="width:200px; margin:auto">
 			<img class="card-img-top" src="${pageContext.request.contextPath}<%=userProfileImg%>" alt="Card image" style="width:100%">
 			<div class="card-body">
@@ -52,7 +53,7 @@
 			</div>
 		</div>
 	</div>
-	<br>
+
 
         	
 

@@ -13,14 +13,19 @@
 
           </span>
     <span>
+    <%if(session.getAttribute("AuthLevel").equals("manager")){%>
+        <a href="${pageContext.request.contextPath}/managerPage.jsp">
+            <img src="${pageContext.request.contextPath}/assets/icons/manager.png" width="30px">
+        </a>
+    <%} %>
         <a href="${pageContext.request.contextPath}/totalPostView.jsp">
-            <img src="${pageContext.request.contextPath}/assets/icons/explore.png">
+            <img src="${pageContext.request.contextPath}/assets/icons/explore.png" width="30px">
         </a>
         <a href="/Sophist/profile/profilePage.jsp?user_id=<%=session.getAttribute("memId")%>">
-            <img src="${pageContext.request.contextPath}/assets/icons/profile.png">
+            <img src="${pageContext.request.contextPath}/assets/icons/profile.png" width="30px">
         </a>
         <a href="${pageContext.request.contextPath}/PostEdit/imageSelectPage.jsp">
-            <img src="${pageContext.request.contextPath}/assets/icons/upload.png">
+            <img src="${pageContext.request.contextPath}/assets/icons/upload.png" width="30px">
         </a>        
         
     </span>

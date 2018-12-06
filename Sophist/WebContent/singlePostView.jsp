@@ -5,6 +5,7 @@
 <%@ page import="dbControl.CommentDAO" %>
 <%@ page import="dbControl.CommentDTO" %>
 <%@ page import="dbControl.LikeDAO" %>
+<%@ page import="dbControl.ReportDAO" %>
 <%@ page import="java.util.List" %>
 
 <%  //로그인 체크
@@ -55,6 +56,9 @@
         
         LikeDAO likeDao = new LikeDAO();
         boolean islike = likeDao.isLike(memId, postId);
+        
+        ReportDAO reportDao = new ReportDAO();
+        boolean isReport = reportDao.isReports(memId, postId); 
 %>
 <div class="content-area">
     <div class="post-box">
@@ -81,7 +85,34 @@
                 	좋아요 
                 </button>
               <%} 		%>
-              <%=cntLike %>개	       
+              <%=cntLike %>개
+              
+              <span style="float:right">
+              <%if(isReport == true){ %>
+                <button class="unreport-button" onclick="location.href='${pageContext.request.contextPath}/report/unReport.jsp?user_id=<%=memId%>&post_id=<%=postId%>'">
+                	신고 
+                </button>
+              <%} else { %>  
+                <a class="report-button" href="#popup1">
+                	신고 
+                </a>
+                
+                <div id="popup1" class="overlay">
+				    <div class="popup">
+				     <div class="login-greet">
+           			 신고 사유를 적어주세요
+       				 </div>
+				      <a class="close" href="#">×</a>
+				      <div class="login-form">
+				        <form action="${pageContext.request.contextPath}/report/report.jsp?user_id=<%=memId%>&post_id=<%=postId%>" method="post">
+				        	<textarea style="width:300px; height:100px;" name="report_reason"></textarea><br><br>
+				      		<input type="submit" value="신고" id="report-button">
+				      	</form>
+				      </div>
+				    </div>
+				 </div>
+              <%} 		%>
+              </span>	       	       
                 </p>
                 <p class="post-story">
                     <b><a href="${pageContext.request.contextPath}/profile/profilePage.jsp?user_id=<%= userId%>">
@@ -98,9 +129,12 @@
                     <%
 							if(memId == comment.getUser_id()){
 					%>
-							<a href="${pageContext.request.contextPath}/commentDeletePro.jsp?comment_id=<%=comment.getId()%>">[삭제]</a>
-							<br>
-                    <%		}
+							<a href="${pageContext.request.contextPath}/commentDeletePro.jsp?comment_id=<%=comment.getId()%>"><span style="font-size:13px;">[삭제하기]</span></a>
+					<%
+                    		}
+                    %>
+                    		<br>
+                    <%
                       	}
                     %>
                 </p>
@@ -110,7 +144,6 @@
 <%
         if(myPost == true){
 %>
-    <%=postId %>
 
     <div class="delete-button-div">
         <button class="post-edit-button" onclick="location.href='${pageContext.request.contextPath}/PostEdit/postingModifyPage.jsp?postId=<%=postId%>'">        
@@ -121,9 +154,16 @@
         </button>
     </div>
 <%
-        }
+        } else if(session.getAttribute("AuthLevel").equals("manager")){
 %>
-
+    <div class="delete-button-div">
+        <button class="post-delete-button" onclick="location.href='${pageContext.request.contextPath}/PostEdit/deletePost.jsp?post_id=<%=postId%>'">        
+           	 삭제
+        </button>
+    </div>
+    <%
+        }
+    %>
 </div>
 </body>
 </html>

@@ -24,11 +24,12 @@
         <hr>
         <form name="fileform" enctype="multipart/form-data" action="imgUpload.jsp" method="post">
             <p>
-                <input type="file" value="이미지 선택" name="filename"><br>
-                <input type="checkbox" name="check1" value="true"/> 표정인식
-            </p>
+                <input type="file" value="이미지 선택" name="filename"> <input type="checkbox" name="check1" value="true"/> 표정인식<br>
+            </p><br>
+            <center>
             <input type="submit" value="확인" class="image-select-button">
-            <input type="button" value="뒤로가기" class="image-select-button">
+            <input type="button" onClick="history.back()" value="뒤로가기" class="image-select-button">
+            </center>
         </form>
     </div>
 </div>

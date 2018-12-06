@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//WebContent/managerPage.jsp=UTF-8
+encoding//src/Emotion/EmotionAnalyze.java=UTF-8
+encoding//src/dbControl/CommentDAO.java=UTF-8
+encoding//src/dbControl/FollowDAO.java=UTF-8
+encoding//src/dbControl/LikeDAO.java=UTF-8
+encoding//src/dbControl/MemberDAO.java=UTF-8
+encoding//src/dbControl/PostDAO.java=UTF-8
+encoding//src/dbControl/PostDTO.java=UTF-8
+encoding/<project>=UTF-8

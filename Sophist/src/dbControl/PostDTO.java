@@ -75,21 +75,23 @@ public class PostDTO {
         this.create_datetime = create_datetime;
     }
     
+    //글 수정시에 링크걸려있는 해쉬태그을 파싱하는 함수
     public String getHashString()
     {
     	String result = "";
-    	int shapIndex = 0;
-    	int leftBraceIndex = 0;
-    	
-    	while(shapIndex!=-1 && leftBraceIndex!=-1) {
-    		shapIndex = this.content.indexOf('#', shapIndex+1);
-	    	leftBraceIndex = this.content.indexOf('<', leftBraceIndex+6);
-	    	
-	    	if(shapIndex!=-1 && leftBraceIndex!=-1) {
-	    		result+=(content.substring(shapIndex, leftBraceIndex)+" ");
-	    	}
+
+    	for(int i=0; i<this.content.length(); i++)
+    	{
+    		if(this.content.charAt(i) == '<') {
+    			while(this.content.charAt(i) != '>') {
+    				i++;
+    			}
+    			i++;
+    		}
+    		if(!(i > this.content.length()-1))
+    			result = (String)(result + this.content.charAt(i));
     	}
-    	
+      	
     	return result;
     }
 }
